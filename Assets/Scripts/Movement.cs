@@ -72,10 +72,9 @@ public class Movement : MonoBehaviour
 
     }
 
-    private void jumping(){
+    private int jumpingRay(){
         int countArr = 0;
-        
-        RaycastHit hitInfo;
+         RaycastHit hitInfo;
         //Array of rays, in order: center, right, left, foreward, backward 
         Ray[] array = new Ray[]{new Ray(_cube.position, Vector3.down), new Ray(_cube.position + new Vector3(0.49f,0,0), Vector3.down), new Ray(_cube.position + new Vector3(-0.49f,0,0), Vector3.down),new Ray(_cube.position + new Vector3(0,0,0.49f), Vector3.down),new Ray(_cube.position + new Vector3(0,0,-0.49f), Vector3.down)};
         for(int i = 0; i<5; i++){
@@ -87,9 +86,15 @@ public class Movement : MonoBehaviour
                 }
             }
         }
+        return countArr;
+    }
+
+    private void jumping(){
+        int countArr = jumpingRay();
+
         if(countArr > 0){
             if(_cube.velocity.y == 0){
-                _cube.velocity = new Vector3(_cube.velocity.x,7,_cube.velocity.z);
+                _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
                 doubleJump = true;
                 sameFrame = true;
             }
@@ -98,13 +103,16 @@ public class Movement : MonoBehaviour
         int holdingSpace = GameObject.Find("GameManager").GetComponent<EventManager>().holdingJump;
 
         if(doubleJump && gameMan.GetComponent<GameManager>().checkPizza() != 0 && sameFrame == false && holdingSpace<=1){
-            gameMan.GetComponent<GameManager>().subPizza();
-            if(_cube.velocity.y >= 0){
-                _cube.velocity = new Vector3(_cube.velocity.x,_cube.velocity.y + 7, _cube.velocity.z);
-            } else {
-                _cube.velocity = new Vector3(_cube.velocity.x,7,_cube.velocity.z);
-            }
+            if(jumpingRay() == 0){
+                gameMan.GetComponent<GameManager>().subPizza();
+                Debug.Log(_cube.velocity.y);
+                if(_cube.velocity.y > 0){
+                    _cube.velocity = new Vector3(_cube.velocity.x,_cube.velocity.y + 6, _cube.velocity.z);
+                } else {
+                    _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
+                }
             doubleJump = false;
+            }
         }
     
         sameFrame = false;

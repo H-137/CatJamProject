@@ -41,7 +41,7 @@ public class ObstacleGen : MonoBehaviour
             GameObject newObstacle = Instantiate(choseObstacle(),new Vector3(blocksPlaced + 30, 0, 0), choseRotation());
             blocksPlaced +=15;
             if(Random.Range(0,3) == 1){
-                GameObject newPizza = Instantiate(pizzaSlice, new Vector3(blocksPlaced + 30 + Random.Range(-2,3), Random.Range(0,2), Random.Range(-2,3)), Quaternion.identity);
+                GameObject newPizza = Instantiate(pizzaSlice, new Vector3(blocksPlaced + 30 + Random.Range(-2,3), 1, Random.Range(-2,3)), Quaternion.identity);
             }
         }
     }
