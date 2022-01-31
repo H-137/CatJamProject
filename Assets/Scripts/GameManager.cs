@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
 
 
     bool ran;
-    int ii = 0;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -40,15 +39,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        ii = 0;
         coroutine = pizzaTimer();
         highscore = PlayerPrefs.GetInt("highscore", highscore);
         Debug.Log(highscore);
     }
 
     public void gameOver(){
-        Debug.Log(ii);
-        ii++;
         final = this.GetComponent<score>().STOPCOUNT();
         if(final > highscore){
             highscore = final;

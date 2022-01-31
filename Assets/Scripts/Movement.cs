@@ -88,8 +88,8 @@ public class Movement : MonoBehaviour
             }
         }
         if(countArr > 0){
-            if(_cube.velocity.y> -0.01 && _cube.velocity.y < 0.01){
-                _cube.AddForce(new Vector3(0,jumpForce,0));
+            if(_cube.velocity.y == 0){
+                _cube.velocity = new Vector3(_cube.velocity.x,7,_cube.velocity.z);
                 doubleJump = true;
                 sameFrame = true;
             }
@@ -99,14 +99,12 @@ public class Movement : MonoBehaviour
 
         if(doubleJump && gameMan.GetComponent<GameManager>().checkPizza() != 0 && sameFrame == false && holdingSpace<=1){
             gameMan.GetComponent<GameManager>().subPizza();
-            _cube.AddForce(new Vector3(0,jumpForce,0));
+            if(_cube.velocity.y >= 0){
+                _cube.velocity = new Vector3(_cube.velocity.x,_cube.velocity.y + 7, _cube.velocity.z);
+            } else {
+                _cube.velocity = new Vector3(_cube.velocity.x,7,_cube.velocity.z);
+            }
             doubleJump = false;
-            Debug.Log("ran");
-        } else {
-            Debug.Log(doubleJump);
-            Debug.Log(gameMan.GetComponent<GameManager>().checkPizza());
-            Debug.Log(sameFrame == false);
-            Debug.Log(holdingSpace<=1);
         }
     
         sameFrame = false;
