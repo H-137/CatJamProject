@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour
     {
         coroutine = pizzaTimer();
         highscore = PlayerPrefs.GetInt("highscore", highscore);
-        Debug.Log(highscore);
     }
 
     public void gameOver(){

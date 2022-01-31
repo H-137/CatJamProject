@@ -16,4 +16,8 @@ public class StartScript : MonoBehaviour
     public void loadInstructions(){
         SceneManager.LoadScene("Instructions");
     }
+
+    public void loadLeaderboard(){
+        SceneManager.LoadScene("Leaderboard");
+    }
 }

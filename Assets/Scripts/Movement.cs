@@ -8,9 +8,6 @@ public class Movement : MonoBehaviour
     //Rigidbody of the player
     private Rigidbody _cube;
 
-    //How much force is added for each player jump, How fast the player is
-    private float jumpForce;
-
     //private bool onGround, zMax, xMax, isRotated;
 
     private float xAdd, zAdd, speed, newXVel, distanceInAir;
@@ -18,10 +15,8 @@ public class Movement : MonoBehaviour
     MeshFilter myMesh;
     private float timer;
     private GameObject gameMan;
-
     private bool sameFrame;
-    
-    private bool doubleJump = false;
+    public GameObject road;
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -62,9 +57,8 @@ public class Movement : MonoBehaviour
             jumping();
         }
         if(crouch){
-            crouching();
+        
         } else {
-            jumpForce = 300;
             //speed = 5;
             distanceInAir = 1;
         }
@@ -90,37 +84,21 @@ public class Movement : MonoBehaviour
     }
 
     private void jumping(){
-        int countArr = jumpingRay();
-
-        if(countArr > 0){
-            if(_cube.velocity.y == 0){
-                _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
-                doubleJump = true;
-                sameFrame = true;
-            }
-            //_cube.AddForce(new Vector3(0,jumpForce,0));
-        } 
+        int numPizzas = gameMan.GetComponent<GameManager>().checkPizza();
+    
         int holdingSpace = GameObject.Find("GameManager").GetComponent<EventManager>().holdingJump;
 
-        if(doubleJump && gameMan.GetComponent<GameManager>().checkPizza() != 0 && sameFrame == false && holdingSpace<=1){
-            if(jumpingRay() == 0){
-                gameMan.GetComponent<GameManager>().subPizza();
-                Debug.Log(_cube.velocity.y);
-                if(_cube.velocity.y > 0){
-                    _cube.velocity = new Vector3(_cube.velocity.x,_cube.velocity.y + 6, _cube.velocity.z);
-                } else {
-                    _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
-                }
-            doubleJump = false;
+        if(Utilities.onFloor){
+            _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
+            sameFrame = true;
+        } else if(numPizzas != 0 && holdingSpace <= 1 && sameFrame == false){
+            gameMan.GetComponent<GameManager>().subPizza();
+            if(_cube.velocity.y > 0){
+                _cube.velocity = new Vector3(_cube.velocity.x,_cube.velocity.y + 6, _cube.velocity.z);
+            } else {
+                _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
             }
         }
-    
-        sameFrame = false;
-        
-    }
-
-    private void crouching(){
-        //speed = 3;
-        jumpForce = 150;
+        sameFrame = false;      
     }
 }
