@@ -40,20 +40,19 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         coroutine = pizzaTimer();
-        highscore = PlayerPrefs.GetInt("highscore", highscore);
+        Utilities.highScore = PlayerPrefs.GetInt("highscore", highscore);
+
     }
 
     public void gameOver(){
         final = this.GetComponent<score>().STOPCOUNT();
-        if(final > highscore){
-            highscore = final;
-            Debug.Log(highscore);
+        if(final > Utilities.highScore){
+            Utilities.highScore = final;
             PlayerPrefs.SetInt("highscore", highscore);
             gameOverScore.text = "GAME OVER \n SCORE: " + final + "\n NEW HIGH SCORE!";
-        } else if(highscore >= final){
-            gameOverScore.text = "GAME OVER \n SCORE: " + final + "\n HIGH SCORE: " + highscore;
+        } else if(Utilities.highScore >= final){
+            gameOverScore.text = "GAME OVER \n SCORE: " + final + "\n HIGH SCORE: " + Utilities.highScore;
         }
-        //Utilities.setFinalScore(final);
         gameOverCanvas.GetComponent<Canvas>().enabled = true;
         scoreCanvas.GetComponent<Canvas>().enabled = false;
         this.GetComponent<EventManager>().gameOver= true;
@@ -83,7 +82,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void goPizza(){
-        if(slices >= 4){
+        if(slices >= 4 && pizzaTime == false){
             slices = 0;
             pizzaImage.GetComponent<Image>().sprite = pizzaSprites[0];
             pizzaTime = true;
@@ -97,7 +96,6 @@ public class GameManager : MonoBehaviour
             countDown.text = "" + (int)time;
             yield return new WaitForSeconds(1);
             time--;
-            Debug.Log("Time left: " + time);
             if(time<=0){
                 countDown.enabled = false;
                 StopCoroutine(coroutine);

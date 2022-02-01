@@ -16,7 +16,6 @@ public class pizza : MonoBehaviour
             alreadyhit = true;
             Destroy(this.gameObject);
             GameObject.Find("GameManager").GetComponent<GameManager>().addPizza();
-            //Debug.Log("PIZZA");
         }
     }
 }

@@ -8,6 +8,10 @@ public static class Utilities
     public static int highScore;
     public static bool onFloor = false;
 
+    public static int[] scoreArr = new int[5];
+
+    public static string[] nameArr = new string[5];
+
     public static bool setFinalScore(int score){
         finalScore = score;
         if(finalScore > highScore){
