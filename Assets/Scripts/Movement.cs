@@ -18,6 +18,8 @@ public class Movement : MonoBehaviour
     private bool sameFrame;
     public GameObject road;
 
+    private bool canJump;
+
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
@@ -31,6 +33,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canJump = false;
         speed = 10;
         _cube = this.GetComponent<Rigidbody>();
         gameMan = GameObject.Find("GameManager");
@@ -84,11 +87,12 @@ public class Movement : MonoBehaviour
     }
 
     private void jumping(){
+        StartCoroutine(WaitForSeconds(0.1f));
         int numPizzas = gameMan.GetComponent<GameManager>().checkPizza();
     
         int holdingSpace = GameObject.Find("GameManager").GetComponent<EventManager>().holdingJump;
 
-        if(Utilities.onFloor && _cube.velocity.y == 0){
+        if(Utilities.onFloor && canJump){
             _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
             sameFrame = true;
         } else if(numPizzas != 0 && holdingSpace <= 1 && sameFrame == false){
@@ -100,5 +104,12 @@ public class Movement : MonoBehaviour
             }
         }
         sameFrame = false;      
+    }
+
+
+    public IEnumerator WaitForSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        canJump = true;
     }
 }
