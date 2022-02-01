@@ -35,4 +35,8 @@ public class StartScript : MonoBehaviour
         yield return new WaitForSeconds(2);
         GameObject.Find("warning").GetComponent<TMP_Text>().enabled = false;
     }
+
+    public void loadCredits(){
+        SceneManager.LoadScene("Credits");
+    }
 }
