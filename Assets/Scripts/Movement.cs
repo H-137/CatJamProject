@@ -88,7 +88,7 @@ public class Movement : MonoBehaviour
     
         int holdingSpace = GameObject.Find("GameManager").GetComponent<EventManager>().holdingJump;
 
-        if(Utilities.onFloor){
+        if(Utilities.onFloor && _cube.velocity.y == 0){
             _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
             sameFrame = true;
         } else if(numPizzas != 0 && holdingSpace <= 1 && sameFrame == false){
