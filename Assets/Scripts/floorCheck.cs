@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class floorCheck : MonoBehaviour
 {
+    /// <summary>
+    /// OnTriggerEnter is called when the Collider other enters the trigger.
+    /// </summary>
+    /// <param name="other">The other Collider involved in this collision.</param>
+    void OnTriggerEnter(Collider other)
+    {
+        Utilities.onFloor = false;
+    }
 
     /// OnTriggerStay is called once per frame for every Collider other
     /// that is touching the trigger.
