@@ -12,6 +12,8 @@ public static class Utilities
 
     public static string[] nameArr = new string[5];
 
+    public static bool hitGround = false;
+
     public static bool setFinalScore(int score){
         finalScore = score;
         if(finalScore > highScore){

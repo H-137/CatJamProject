@@ -28,6 +28,8 @@ public class EventManager : MonoBehaviour
 
     public int holdingJump;
 
+    public bool canJump;
+
 
 
     /// <summary>
@@ -77,5 +79,15 @@ public class EventManager : MonoBehaviour
                 SceneManager.LoadScene( SceneManager.GetActiveScene().name );
             }
         }
+    }
+
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
+    {
+        
     }
 }

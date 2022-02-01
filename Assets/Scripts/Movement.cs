@@ -87,12 +87,11 @@ public class Movement : MonoBehaviour
     }
 
     private void jumping(){
-        StartCoroutine(WaitForSeconds(0.1f));
         int numPizzas = gameMan.GetComponent<GameManager>().checkPizza();
     
         int holdingSpace = GameObject.Find("GameManager").GetComponent<EventManager>().holdingJump;
 
-        if(Utilities.onFloor && canJump){
+        if(Utilities.onFloor && Utilities.hitGround){
             _cube.velocity = new Vector3(_cube.velocity.x,6,_cube.velocity.z);
             sameFrame = true;
         } else if(numPizzas != 0 && holdingSpace <= 1 && sameFrame == false){
@@ -106,10 +105,4 @@ public class Movement : MonoBehaviour
         sameFrame = false;      
     }
 
-
-    public IEnumerator WaitForSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        canJump = true;
-    }
 }
