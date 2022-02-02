@@ -40,18 +40,17 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         coroutine = pizzaTimer();
-        Utilities.highScore = PlayerPrefs.GetInt("highscore", highscore);
 
     }
 
     public void gameOver(){
         final = this.GetComponent<score>().STOPCOUNT();
-        if(final > Utilities.highScore){
-            Utilities.highScore = final;
-            PlayerPrefs.SetInt("highscore", highscore);
+        //Debug.Log(PlayerPrefs.GetInt("highscore"));
+        if(final > PlayerPrefs.GetInt("highscore")){
+            PlayerPrefs.SetInt("highscore", final);
             gameOverScore.text = "GAME OVER \n SCORE: " + final + "\n NEW HIGH SCORE!";
-        } else if(Utilities.highScore >= final){
-            gameOverScore.text = "GAME OVER \n SCORE: " + final + "\n HIGH SCORE: " + Utilities.highScore;
+        } else if(PlayerPrefs.GetInt("highscore") >= final){
+            gameOverScore.text = "GAME OVER \n SCORE: " + final + "\n HIGH SCORE: " + PlayerPrefs.GetInt("highscore");
         }
         gameOverCanvas.GetComponent<Canvas>().enabled = true;
         scoreCanvas.GetComponent<Canvas>().enabled = false;

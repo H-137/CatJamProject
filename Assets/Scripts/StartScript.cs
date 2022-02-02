@@ -23,7 +23,7 @@ public class StartScript : MonoBehaviour
     }
 
     public void loadScoreSubmit(){
-        if(Utilities.highScore > GameObject.Find("GameManager").GetComponent<SubmitScoreScript>().scoreArr[4]){
+        if(PlayerPrefs.GetInt("highscore") > GameObject.Find("GameManager").GetComponent<SubmitScoreScript>().scoreArr[4]){
             SceneManager.LoadScene("ScoreSubmit");
         } else {
             StartCoroutine(warningMessage());

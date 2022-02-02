@@ -36,23 +36,33 @@ public class SubmitScoreScript : MonoBehaviour
 
     public void sendScore()
     {
-        nameText = nameInput.text.ToUpper();
-        highScore = Utilities.highScore;
+        if(nameInput.text.Length != 3)
+        {
+            warning.text = "Please enter initials with 3 characters";
+            StartCoroutine(warningMessage());
+            return;
+        }
+        if(PlayerPrefs.GetString("name") == "")
+        {
+            PlayerPrefs.SetString("name",nameInput.text.ToUpper());
+        }
+        highScore = PlayerPrefs.GetInt("highscore");
         for( int i = 0; i < Utilities.nameArr.Length; i++)
         {
-            Debug.Log(Utilities.nameArr[i]);
-            Debug.Log(nameText);
-            if(nameInput.text == Utilities.nameArr[i])
+            //Debug.Log(Utilities.nameArr[i]);
+            //Debug.Log(nameText);
+            if(PlayerPrefs.GetString("name") == Utilities.nameArr[i])
             {
                 if(highScore <= Utilities.scoreArr[i])
                 {
+                    warning.text = "Higher or equal score with same initials already exists";
                     StartCoroutine(warningMessage());
                     return;
                 }
                 break;
             }
         }
-        StartCoroutine(sendScore(new LeaderboardEntry() { initials = nameText, score = highScore }));
+        StartCoroutine(sendScore(new LeaderboardEntry() { initials = PlayerPrefs.GetString("name"), score = highScore }));
     }
 
     public IEnumerator warningMessage(){
@@ -80,7 +90,7 @@ public class SubmitScoreScript : MonoBehaviour
         {
             // Show results as text
             string responseText = www.downloadHandler.text;
-            Debug.Log(responseText);
+            //Debug.Log(responseText);
 
             // decode response json
 

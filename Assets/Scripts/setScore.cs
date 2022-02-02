@@ -9,7 +9,7 @@ public class setScore : MonoBehaviour
 
     void Start()
     {
-        scoreText.text = "SCORE: " + Utilities.highScore;
+        scoreText.text = "SCORE: " + PlayerPrefs.GetInt("highscore");
     }
 
 }
