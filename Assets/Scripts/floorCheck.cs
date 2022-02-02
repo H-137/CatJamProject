@@ -13,7 +13,7 @@ public class floorCheck : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Utilities.onFloor = false;
-        Utilities.hitGround = true;
+        //Utilities.hitGround = true;
     }
 
     /// OnTriggerStay is called once per frame for every Collider other
@@ -23,7 +23,7 @@ public class floorCheck : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         Utilities.onFloor = true;
-        Utilities.hitGround = true;
+        //Utilities.hitGround = true;
     }
 
     /// <summary>
