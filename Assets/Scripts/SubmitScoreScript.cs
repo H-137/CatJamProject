@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Security.Cryptography;
+using System.Text;
 
 public class SubmitScoreScript : MonoBehaviour
 {
@@ -18,6 +20,11 @@ public class SubmitScoreScript : MonoBehaviour
     public int[] scoreArr;
 
     public bool isLeaderboard;
+
+    public string calculateHmac(byte[] data) {
+        HMACSHA256 hmac = new HMACSHA256(SecretKeys.leaderboard_hmac_key);
+        return System.Convert.ToBase64String(hmac.ComputeHash(data));
+    }
 
     [System.Serializable]
     public class LeaderboardEntry
@@ -117,7 +124,11 @@ public class SubmitScoreScript : MonoBehaviour
         string json = JsonUtility.ToJson(entry);
         Debug.Log(json);
         byte[] rawBody = System.Text.Encoding.UTF8.GetBytes(json);
-        UnityWebRequest www = UnityWebRequest.Put("https://catjam-leaderboard.vercel.app/reportScore", rawBody);
+        UnityWebRequest www =UnityWebRequest.Put("https://catjam-leaderboard.vercel.app/reportScore", rawBody);
+        www.SetRequestHeader("Content-Type", "application/json");
+        Debug.Log(calculateHmac(rawBody));
+        www.SetRequestHeader("Content-Authenticity-HMAC", calculateHmac(rawBody));
+
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
