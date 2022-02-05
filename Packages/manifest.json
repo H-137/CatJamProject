@@ -2,6 +2,7 @@
   "dependencies": {
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
+    "com.unity.ads": "3.7.5",
     "com.unity.collab-proxy": "1.15.7",
     "com.unity.formats.fbx": "4.1.2",
     "com.unity.ide.rider": "2.0.7",
@@ -9,6 +10,7 @@
     "com.unity.ide.vscode": "1.2.4",
     "com.unity.probuilder": "4.5.2",
     "com.unity.quicksearch": "2.0.2",
+    "com.unity.services.analytics": "3.0.0-pre.3",
     "com.unity.test-framework": "1.1.29",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.4.8",
