@@ -72,4 +72,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Secrets Files
-/Assets/Scripts/secret_keys.cs
+Assets/Scripts/secrets_keys.cs
